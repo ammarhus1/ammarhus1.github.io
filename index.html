@@ -14,344 +14,476 @@
 
 	<style type="text/css">
 		@font-face {
-			font-family: fortnite;
-			src: url(assets/fortnite.otf);
-		}
+  font-family: fortnite;
+  src: url(assets/fortnite.otf);
 
-		.checklist {
-			border: 5px solid;
-			border-radius: 25px;
-			background-color: #1abc9c
-		}
+}
 
-		.calc {
-			border: 5px solid;
-			border-radius: 25px;
-			background-color: #fac125
-		}
+body {
+  font-family: fortnite;
+  letter-spacing: 0.05em;
+  background-image: linear-gradient(to bottom right, #123371, #0f5f93);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 
-		.results {
-			border: 5px solid;
-			border-radius: 25px;
-			background-color: #e2e2e2
-		}
+.title {
+  color: white;
+  font-size: xx-large;
+  text-transform: uppercase;
+  padding: 20px;
+}
 
-		fieldset legend {
-			font-family: fortnite;
-			font-size: xx-large;
-			border: solid black;
-			border-width: 5px 3px 0 3px;
-			border-radius: 10px;
-			padding: 10px;
-			background-color: inherit
-		}
+.page-nav {
+  visibility: hidden;
+  text-transform: uppercase;
+  font-size: 2em;
+  width: 100%;
+  background-color: #062a67;
+  color: #00a5f1;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 15px;
+}
 
-		#punchcards {
-			list-style-type: none;
-			font-family: fortnite;
-			font-size: larger;
-		}
+.page-nav div {
+  padding: 10px;
+  height: 100%;
+  transition: font-size 0.2s linear, background-color 0.2s linear, color 0.2s linear;
+}
 
-		#punchcards input {
-			display: none
-		}
+.page-nav div:not(.page-nav-active):hover {
+  color: white;
+  font-size: 1.1em;
+  transition: color 0.2s linear, font-size 0.2s linear;
+}
 
-		#punchcards li {
-			display: inline-block;
-			width: 120px;
-		}
+.page-nav-active {
+  color: black;
+  font-size: 1.1em;
+  background-color: white;
+  transition: background-color 0.25s ease-in, color 0.25s ease-in;
+}
 
-		#punchcards li input[type="checkbox"][id^="cb"] {
-			display: none;
-		}
+.page {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
 
-		#punchcards li label {
-			padding: 10px;
-			display: block;
-			position: relative;
-			margin: 2px;
-			cursor: pointer;
-		}
+.card {
+  width: 300px;
+  border-radius: 5px;
+  background-color: #062a67;
+  overflow: hidden;
+  font-size: xx-large;
+}
+.big-card {
+  width: 100%;
+  margin: 0 10%;
+  color: white
+}
+.card-title {
+  width: 100%;
+  color: white;
+  padding-top: 10px;
+}
 
-		label:before {
-			background-color: white;
-			color: white;
-			content: " ";
-			display: block;
-			border-radius: 50%;
-			border: 1px solid grey;
-			position: absolute;
-			top: -5px;
-			left: -5px;
-			width: 25px;
-			height: 25px;
-			text-align: center;
-			line-height: 28px;
-			transition-duration: 0.4s;
-			transform: scale(0);
-		}
+.card-title>div {
+  display: inline-block;
+  margin-left: 10px;
+}
 
-		label img {
-			height: 100px;
-			width: 100px;
-			transition-duration: 0.2s;
-			transform-origin: 50% 50%;
-		}
+.card-title>div>label {
+  display: block;
+  font-size: x-large;
+}
 
-		:checked+label {
-			border-color: #ddd;
-			background-color: #42f57e
-		}
+.card-title>img {
+  display: inline-block;
+  height: 50px;
+  margin-left: 10px;
+}
 
-		/*
-		:checked+label:before {
-			content: "✓";
-			background-color: #4CAF50;
-			transform: scale(1);
-		}
-		*/
+.green {
+  background: radial-gradient(ellipse at center bottom, #61bf00 0%, #065916 100%);
+  border-bottom: 8px #61bf00 solid;
+}
 
-		:checked+label img {
-			transform: scale(0.9);
-			box-shadow: 0 0 5px #333;
-			z-index: -1;
-		}
+.battlepass {
+  background: radial-gradient(ellipse at center bottom, #f97763 0%, #750651 80%, #430950 100%);
+  border-bottom: 8px #8f1c54 solid;
+}
 
-		.badge {
-			position: absolute;
-			bottom: -5px;
-			right: -5px;
-			padding: 5px 10px;
-			border-radius: 50%;
-			background: red;
-			color: white;
-			font-size: small;
-		}
+.yellow {
+  background: radial-gradient(ellipse at center bottom, #e0ce00 0%, #e69800 60%, #e65700 100%);
+  border-bottom: 8px #e68800 solid;
+}
 
-		button {
-			background-color: #42f57e;
-			font-family: fortnite;
-			font-size: x-large;
-			/* Green */
-			border: none;
-			color: black;
-			padding: 15px 32px;
-			text-align: center;
-			text-decoration: none;
-			display: inline-block;
-			margin: 4px 2px;
-			cursor: pointer;
-			-webkit-transition-duration: 0.4s;
-			transition-duration: 0.4s;
-			box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-			border: #27da62 2px solid;
-		}
+.characters {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  clear:both
+}
 
-		#results div {
-			display: block;
-			float: left;
-			margin-right: 10px;
-			margin-bottom: 10px;
-			width: 200px;
-			font-family: fortnite;
-			font-size: x-large;
-			text-align: center;
-		}
+.character {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 5px
+}
 
-		.goal span {
-			display: block;
-			float: left;
-			text-align: center;
-			margin: auto;
-		}
+.character-title {
+  display: block;
+  position: relative;
+  height: 30px;
+  width:100%;
+}
+
+.character-title label {
+  color: white;
+  position: absolute;
+  top: 0px;
+  white-space: nowrap;
+  text-align: center;
+  min-width: 100%;
+  /* Apply animation to this element */
+
+}
+
+
+@keyframes scroll-left {
+  0% {
+	  
+  }
+
+  100% {
+		left:0%;
+  }
+}
+
+.character>img {
+  display: block;
+}
+
+.character input {
+  display: none;
+}
+
+.character span {
+  visibility: hidden;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://raw.githubusercontent.com/ammarhus1/ammarhus1.github.io/main/assets/check.svg');
+  background-repeat: no-repeat;
+  background-size: calc(100% - 10px);
+  background-position: center center;
+  background-color: rgba(0, 255, 0, 0.6);
+}
+
+.number {
+  font-family: fortnite;
+  font-size: xx-large;
+  width: 110px;
+  float: right;
+  margin: 8px;
+}
+
+.card>label {
+  float: left;
+  color: white;
+  font-size: x-large;
+  padding-top: 15px;
+  padding-left: 15px;
+  clear: both
+}
+
+#checkall {
+  float: left;
+  margin: 15px;
+}
+
+#uncheckall {
+  float: right;
+  margin: 15px;
+}
+#calculate {
+  background-color:yellow;
+  color:black;
+  font-family: fortnite;
+  text-transform: uppercase;
+  font-size: 3em;
+  width:80%;
+  margin: 10px 10%;
+  padding:20px 10px 10px 10px;
+}
+.big-check {
+  width:40px;
+  height:40px;
+}
+.card > center {
+  color:white;
+  margin-top:10px;
+}
+hr {
+  display:block;
+  width:90%;
+  height:5px;
+  background-color:white;
+  border:0;
+  border-radius:5px;
+  margin-top:0;
+  margin-bottom:10px;
+}
+.radio {
+  color: #89f0ff
+}
+.radio input{
+  width:20px;
+  height:20px;
+}
+.page-container {
+  margin:10px;
+}
+
 	</style>
 
 
 </head>
 
 <body>
-	<div>
-		<fieldset class="checklist">
-			<legend>Punchcard Checklist</legend>
-			<h3>Click all punchcards you have currently completed.</h3>
-			<button class="check" type='button' id="checkall">Check All</button>
-			<button class="check" type='button' id="uncheckall">Uncheck All</button>
-			<ul id="punchcards">
-
-
-			</ul>
-		</fieldset>
-		<br />
-		<fieldset class="calc">
-			<legend>Experience Calculator:</legend>
-			<table>
-				<tr>
-					<th style="width:150px;"></th>
-					<th></th>
-				</tr>
-				<tr>
-					<td><label for="current">Current Level:</label></td>
-					<td><input name="current" type="number" value=1 min=1 max=199 /></td>
-				</tr>
-				<tr>
-					<td><label for="target">Target Level:</label></td>
-					<td><input name="target" type="number" value=200 min=1 max=200 /></td>
-				</tr>
-				<tr>
-					<td><label for="newchars">Consider all future Character Punchcards?</label></td>
-					<td id="newChars"><input name="newchars" checked type="checkbox" /></td>
-				</tr>
-				<tr>
-					<td><label for="newchars">Do weekly challenges?</label></td>
-					<td>
-						<input checked="checked" name="weekly" type="radio" value="3" /> Complete 3/3 weekly
-						challenges <br />
-						<input name="weekly" type="radio" value="2" /> Complete 2/3 weekly challenges <br />
-						<input name="weekly" type="radio" value="0" /> Complete 0/3 weekly challenges <br />
-					</td>
-				</tr>
-				<tr>
-					<td><button type='button' id="calc">Calculate</button></td>
-					<td></td>
-				</tr>
-			</table>
-
-		</fieldset>
-
-		<br />
-		<fieldset class="results">
-			<legend>Results</legend>
-			<div id="results">
-
-			</div>
-
-		</fieldset>
+	<div class="title">
+	  Fortnite Level Calculator <br> Chapter 2 Season 8
 	</div>
-
+  
+	<div class="page-nav">
+	  <div class="page-nav-active">
+		Current Progress
+	  </div>
+	  <div>
+		Future Progress
+	  </div>
+	  <div>
+		Results
+	  </div>
+	  <br>
+	</div>
+  
+	<div class="page">
+	  <div class="card">
+		<div class="card-title battlepass">
+		  <img src="https://i.imgur.com/G7oFWlN.png" />
+		  <div>
+			BattlePass
+			<label>Current Level</label>
+		  </div>
+		</div>
+		<label for="current-level">Current Level:</label>
+		<input id="current-level" class="number" type="number" value='1' min="1" max="199">
+		<label for="goal-level">Goal Level:</label>
+		<input id="goal-level" class="number" type="number" value='200' min="2" max="200">
+	  </div>
+	  <div class="card">
+		<div class="card-title green">
+		  <img src="https://static.wikia.nocookie.net/fortnite/images/6/67/Season_XP_%28Large%29_-_XP_-_Fortnite.png" />
+		  <div>
+			Completed
+			<label>Punchcards</label>
+		  </div>
+		</div>
+		
+		<button id="checkall">
+		Check All
+		</button>
+		<button id="uncheckall">
+		Uncheck All
+		</button>
+		<div class="characters" id="characters">
+	
+		  
+		  
+		</div>
+  
+	  </div>
+	  <div class="card">
+		<div class="card-title yellow">
+		  <img src="https://i.imgur.com/gQ66LOH.png" />
+		  <div>
+			Future
+			<label>Experience</label>
+		  </div>
+		</div>
+		<center>
+		<label for="future-cards">Count all future punchcards?</label><br/>
+		<input id="future-cards" class="big-check" type="checkbox">
+		<hr>
+		
+		<label for="weekly">How many weekly challenges will you do each week?</label> <br/>
+  
+						  <label class="radio"><input checked="checked" name="weekly" type="radio" value="3">3/3</label>
+						  <label class="radio"><input name="weekly" type="radio" value="2">2/3</label>
+						  <label class="radio"><input name="weekly" type="radio" value="0">0/3</label>
+		
+		</center>
+	  </div>
+	</div>
+	
+	<button id="calculate">
+	Calculate!
+	</button>
+	
+	<div class="page">
+	  <div class="card big-card">
+		<div class="card-title battlepass">
+		  <img src="https://i.imgur.com/oBVKogV.png" />
+		  <div>
+			Calculation
+			<label>Results</label>
+		  </div>
+		</div>
+		<div class="page-container">
+		  results
+		</div>
+		
+	  </div>
+	</div>
+  
 	<script>
-		function compDate(parm1, parm2) {     // pass values of START and END dates
-			var date1 = new Date(parm1);
-			var date2;
-			if (parm2 != '') { date2 = new Date(parm2); }
-			else { date2 = new Date(); }	// use today
-			return (date2 - date1) / (1000 * 60 * 60 * 24 * 7).toFixed(2);
-		}
+
+var totalCharacters = 39;
+    var characters = [
+		{ name: "Dire", value: 150000, img: "Dire.png", color: "#c8aa7e" },
+        { name: "Ragsy", value: 150000, img: "Ragsy.png", color: "#ff6997" },
+		{ name: "Nitehare", value: 150000, img: "Nitehare.png", color: "#9A7B73" },
+        { name: "Raven", value: 150000, img: "Raven.png", color: "#8B358B" },
+        { name: "Big Mouth", value: 150000, img: "Big_Mouth.png", color: "#576CBB" },
+        { name: "Grim Fable", value: 150000, img: "Grim_Fable.png", color: "#DCAF6A" },
+        { name: "Wrath", value: 80000, img: "Wrath.png", color: "#0096DE" },
+        { name: "Baba Yaga", value: 80000, img: "Baba_Yaga.png", color: "#F8BC61" },
+        { name: "Charlotte", value: 80000, img: "Charlotte.png", color: "#45ECE3" },
+        { name: "Dark Jonesy", value: 80000, img: "Dark_Jonesy.png", color: "#9397C3" },
+        { name: "Dusk", value: 80000, img: "Dusk.png", color: "#FC2765" },
+        { name: "Fabio Sparklemane", value: 80000, img: "Fabio_Sparklemane.png", color: "#ED6EB4" },
+        { name: "J.B. Chimpanski", value: 80000, img: "J.B._Chimpanski.png", color: "#F15953" },
+        { name: "Kitbash", value: 80000, img: "Kitbash.png", color: "#AE7A33" },
+        { name: "Kor", value: 80000, img: "Kor.png", color: "#F13653" },
+        { name: "Madcap", value: 80000, img: "Madcap.png", color: "#31DAE7" },
+        { name: "Pitstop", value: 80000, img: "Pitstop.png", color: "#B82785" },
+        { name: "Penny", value: 80000, img: "Penny.png", color: "#F3B063" },
+        { name: "Scuba Jonesy", value: 80000, img: "Scuba_Jonesy.png", color: "#7A7DB5" },
+        { name: "The Brat", value: 80000, img: "The_Brat.png", color: "#DDB873" },
+        { name: "Toona Fish", value: 80000, img: "Toona_Fish.png", color: "#88888A" },
+        { name: "Torin", value: 80000, img: "Torin.png", color: "#F165DB" }
+    ];
+
+    var levels = [0, 0, 40000, 90000, 140000, 200000, 260000, 340000, 420000, 500000, 580000, 660000, 740000, 820000, 900000, 980000, 1060000, 1140000, 1220000, 1300000, 1380000, 1460000, 1540000, 1620000, 1700000, 1780000, 1860000, 1940000, 2020000, 2100000, 2180000, 2260000, 2340000, 2420000, 2500000, 2580000, 2660000, 2740000, 2820000, 2900000, 2980000, 3060000, 3140000, 3220000, 3300000, 3380000, 3460000, 3540000, 3620000, 3700000, 3780000, 3860000, 3940000, 4020000, 4100000, 4180000, 4260000, 4340000, 4420000, 4500000, 4580000, 4660000, 4740000, 4820000, 4900000, 4980000, 5060000, 5140000, 5220000, 5300000, 5380000, 5460000, 5540000, 5620000, 5700000, 5780000, 5860000, 5940000, 6020000, 6100000, 6180000, 6260000, 6340000, 6420000, 6500000, 6580000, 6660000, 6740000, 6820000, 6900000, 6980000, 7060000, 7140000, 7220000, 7300000, 7380000, 7460000, 7540000, 7620000, 7700000, 7780000, 7830000, 7880250, 7930750, 7981250, 8032000, 8083000, 8134250, 8185750, 8237500, 8289500, 8341500, 8393750, 8446250, 8499000, 8552000, 8605250, 8658750, 8712250, 8766000, 8820000, 8874250, 8928750, 8983500, 9038500, 9093750, 9149250, 9205000, 9260750, 9316750, 9373000, 9429500, 9486250, 9543250, 9600500, 9658000, 9715750, 9773750, 9832000, 9890500, 9949250, 10008250, 10067500, 10127000, 10186750, 10246750, 10307000, 10367500, 10428250, 10489250, 10550500, 10612000, 10673750, 10735750, 10798000, 10860500, 10923250, 10986250, 11049500, 11113000, 11176750, 11240750, 11305000, 11369500, 11434250, 11499250, 11564500, 11630000, 11695750, 11761750, 11828000, 11894750, 11961750, 12029000, 12096500, 12164250, 12232250, 12300500, 12369000, 12437750, 12507000, 12576500, 12646250, 12716250, 12786500, 12857000, 12927750, 12999000, 13070500, 13142250, 13214250, 13286500, 13359250, 13432250, 13505500, 13579000, 13652750, 13727000, 13801500, 13876250, 13951250, 14026500, 14102250, 14178250, 14254500, 14331000, 14408000, 14485250, 14562750, 14640750, 14719000, 14797500, 14876250, 14955500, 15035000, 15114750, 15195000, 15275500, 15356250, 15437500, 15519000, 15600750, 15683000, 15765500, 15848250, 15931500, 16015000, 16098750, 16183000, 16267500, 16352500, 16437750, 16523250, 16609250, 16695500, 16782250, 16869250, 16956500, 17044250, 17132250, 17220750, 17309500, 17398750, 17488250, 17578250, 17668500, 17759250, 17850250, 17941750, 18033500, 18125750, 18218250, 18311250, 18404500, 18498250, 18592250, 18686750, 18781500, 18876750, 18972250, 19068250, 19164750, 19261500, 19358750, 19456250, 19554250, 19652750, 19751500, 19850750, 19950250, 20050250, 20150750, 20251500, 20352750, 20454500, 20556500, 20659000, 20762000, 20865250, 20969000, 21073250, 21178000, 21283000, 21388500, 21494500, 21601000, 21707750, 21815000, 21922750, 22031000, 22139500, 22248500, 22358000, 22468000, 22578500, 22689250, 22800500, 22912250, 23024500, 23137250, 23250500, 23364000, 23478000, 23592500, 23707500, 23823000, 23939000, 24055500, 24172500, 24290000, 24407750, 24526000, 24644750, 24764000, 24883750, 25004000, 25124750, 25246000, 25367750, 25490000, 25612750, 25736000, 25859750, 25984000, 26108750, 26234000, 26359750, 26486250, 26613250, 26740750, 26868750, 26997250, 27126250, 27255750, 27385750, 27516250, 27647500, 27779250, 27911500, 28044250, 28177500, 28311250, 28445750, 28580750, 28716250, 28852250, 28989000, 29126250, 29264000, 29402250, 29541250, 29680750, 29820750, 29961250, 30102500, 30244250, 30386500, 30529500, 30673000, 30817000, 30961750, 31107000, 31253000, 31399500, 31546500, 31694250, 31842500, 31991500, 32141000, 32291250, 32442000, 32593500, 32745500, 32898250, 33051500, 33205500, 33360000, 33515250, 33671000, 33827500, 33984500, 34142250, 34300750, 34459750, 34619500, 34779750, 34940750, 35102500, 35264750, 35427750, 35591500, 35755750, 35920750, 36086500, 36253000, 36420000, 36587750, 36756250, 36925500, 37095250, 37265750, 37437000, 37609000, 37781750, 37955000, 38129000, 38303750, 38479250, 38655500, 38832500, 39010250, 39188750, 39368000, 39547750, 39728250, 39909500, 40091500, 40274250, 40457750, 40642000, 40827000, 41013000, 41199750, 41387250, 41575500, 41764500, 41954250, 42144750, 42336000, 42528000, 42720750, 42914500, 43109000, 43304250, 43500250, 43697000, 43894750, 44093250, 44292500, 44492750, 44693750, 44895500, 45098000, 45301500, 45505750, 45710750, 45916750, 46123500, 46331250, 46539750, 46749000, 46959250, 47170250, 47382250, 47595000, 47808750, 48023250, 48238750, 48455000, 48672250, 48890500, 49109500, 49329500, 49550250, 49772000, 49994750, 50218250, 50442750, 50668250, 50894500, 51121750, 51350000, 51579250, 51809250, 52040250, 52272250, 52505250, 52739250, 52974000, 53209750, 53446500, 53684250, 53923000, 54162750, 54403500, 54645250, 54888000, 55131750, 55376500, 55622250, 55869000, 56116750, 56365500, 56615250, 56866000, 57117750, 57370500, 57624500, 57879500, 58135500, 58392500, 58650500, 58909750, 59170000, 59431250, 59693500, 59957000, 60221500, 60487000, 60753750, 61021500, 61290500, 61560500, 61831750, 62104000, 62377250, 62651750, 62927250, 63204000, 63482000, 63761000, 64041250, 64322500, 64605000, 64888750, 65173500, 65459500, 65746750, 66035000, 66324500, 66615250, 66907250, 67200250, 67494500, 67790000, 68086750, 68384750, 68684000, 68984500, 69286250, 69589250, 69893500, 70199000, 70505750, 70813750, 71123000, 71433500, 71745250, 72058250, 72372500, 72688000, 73005000, 73323250, 73642750, 73963500, 74285500, 74609000, 74933750, 75259750, 75587250, 75916000, 76246250, 76577750, 76910500, 77244750, 77580250, 77917250, 78255750, 78595500, 78936750, 79279250, 79623250, 79968750, 80315500, 80663750, 81013500, 81364500, 81717000, 82071000, 82426500, 82783500, 83142000, 83501750, 83863000, 84225750, 84590000, 84955750, 85323000, 85691750, 86062000, 86433750, 86807250, 87182250, 87558750, 87936750, 88316250, 88697500, 89080250, 89464500, 89850250, 90237750, 90626750, 91017500, 91409750, 91803500, 92199000, 92596000, 92994750, 93395250, 93797250, 94201000, 94606250, 95013250, 95422000, 95832250, 96244250, 96658000, 97073500, 97490750, 97909500, 98330000, 98752250, 99176250, 99602000, 100029500, 100458750, 100889750, 101322500, 101757000, 102193500, 102631750, 103071750, 103513500, 103957250, 104402750, 104850000, 105299000, 105750000, 106202750, 106657500, 107114000, 107572500, 108032750, 108495000, 108959000, 109425000, 109893000, 110362750, 110834500, 111308250, 111784000, 112261750, 112741250, 113222750, 113706250, 114191750, 114679250, 115168750, 115660250, 116153750, 116649250, 117147000, 117646750, 118148500, 118652250, 119158250, 119666250, 120176250, 120688500, 121202750, 121719000, 122237500, 122758000, 123280750, 123805750, 124332750, 124862000, 125393500, 125927000, 126462750, 127000750, 127541000, 128083500, 128628250, 129175250, 129724500, 130276000, 130829750, 131385750, 131944000, 132504500, 133067250, 133632500, 134200000, 134769750, 135342000, 135916500, 136493250, 137072500, 137654000, 138238000, 138824500, 139413250, 140004500, 140598250, 141194250, 141792750, 142393750, 142997250, 143603250, 144211750, 144822750, 145436250, 146052250, 146670750, 147291750, 147915500, 148541750, 149170500, 149801750, 150435750, 151072250, 151711500, 152353250, 152997750, 153644750, 154294500, 154947000, 155602000, 156259750, 156920250, 157583500, 158249500, 158918250, 159589750, 160264000, 160941000, 161620750, 162303250, 162988500, 163676750, 164367750, 165061500, 165758250, 166457750, 167160250, 167865500, 168573750, 169285000, 169999000, 170716000, 171436000, 172159000, 172885000, 173613750, 174345500, 175080250, 175818250, 176559250, 177303250, 178050250, 178800250, 179553500, 180309750, 181069250, 181831750, 182597500, 183366250, 184138250, 184913500, 185691750, 186473250, 187258000, 188046000, 188837250, 189631750, 190429500, 191230500, 192034750, 192842250, 193653250, 194467500, 195285000, 196106000, 196930250, 197758000, 198589250, 199423750, 200261750, 201103250, 201948250, 202796500, 203648250, 204503500, 205362250, 206224750, 207090750, 207960250, 208833250, 209710000, 210590250, 211474250, 212361750, 213253000, 214147750, 215046250, 215948500, 216854500, 217764250, 218677750, 219595000, 220516000, 221440750, 222369250, 223301500, 224237750, 225177750, 226121750, 227069500, 228021250, 228976750, 229936250, 230899750, 231867250, 232838750, 233814250, 234793750, 235777250, 236764750, 237756250, 238751750, 239751500, 240755250, 241763250, 242775250, 243791500, 244812000, 245836500, 246865250, 247898250, 248935500, 249977000, 251022750, 252073000, 253127500, 254186250, 255249500, 256317000, 257389000, 258465250, 259546000, 260631250, 261721000, 262815250, 263914000, 265017250, 266125000, 267237250, 268354000, 269475500, 270601500, 271732250, 272867500, 274007500, 275152250, 276301500, 277455500, 278614250, 279777750, 280946000, 282119250, 283297250, 284480000, 285667750, 286860250, 288057750, 289260250, 290467500, 291679750, 292897000, 294119250, 295346500, 296579000, 297816500, 299059000, 300306750, 301559500, 302817500, 304080500, 305348750, 306622250, 307901000, 309185000, 310474250, 311768750, 313068750, 314374000, 315684750, 317000750, 318322250, 319649000, 320981250, 322319000, 323662250, 325011000, 326365250, 327725250, 329090750, 330462000, 331838750, 333221250, 334609250, 336003000, 337402500, 338807750, 340218750, 341635750, 343058500, 344487000, 345921500, 347361750, 348808000, 350260250, 351718500, 353182750, 354653000, 356129250, 357611500, 359100000, 360594500, 362095250, 363602000, 365115000, 366634250, 368159750, 369691500, 371229500, 372774000, 374324750, 375882000, 377445500, 379015500, 380592000, 382175000, 383764500, 385360500, 386963000, 388572000, 390187750, 391810000, 393439000, 395074750, 396717250, 398366500, 400022500, 401685250, 403355000, 405031500, 406715000, 408405250, 410102500, 411806750, 413518000, 415236250, 416961500, 418694000, 420433500, 422180250, 423934250, 425695250, 427463500, 429239000, 431022000, 432812250, 434609750, 436414750, 438227250, 440047250, 441874500, 443709500, 445552000, 447402000, 449259500, 451124750, 452997750, 454878250, 456766500, 458662500, 460566500, 462478250, 464397750, 466325250, 468260750, 470204000, 472155250, 474114750, 476082250, 478057750, 480041500, 482033250, 484033250];
+
+		$(".page-nav div").click(function() {
+  $(".page-nav div").removeClass("page-nav-active");
+  $(this).toggleClass("page-nav-active");
+});
+//Add punchcards
+characters.forEach(function (item) {
+        $("#characters").append(
+
+			"<div class='character' style='background:radial-gradient(ellipse at center bottom, " + item.color + " 0%, #000 100%);'>" +
+			"<div class='character-title' style='border-bottom: 5px solid "+item.color+"'>" +
+			"<label>" + item.name + "</label>" +
+			"</div>" +
+			"<img src='Characters/" + item.img + "' />" +
+			"<input type='checkbox' />"  +
+			"<input type='number' value='" + item.value + "'/>" +
+			"<span></span>" +
+		  	"</div>"
+        );
+    });
+
+//CHARACTER PUNCHCARD CODE
+$(".character").click(function() {
+  var checkbox = $(this).find('input');
+  var checkmark = $(this).find('span');
+  if (checkbox.is(':checked')) {
+    checkbox.prop('checked', false);
+    checkmark.css("visibility", "hidden");
+    $(this).removeClass("character-active");
+  } else {
+    checkbox.prop('checked', true);
+    checkmark.css("visibility", "visible");
+    $(this).addClass("character-active");
+  }
+});
+$("#checkall").click(function() {
+
+  $(".character").each(function() {
+    var checkbox = $(this).find('input');
+    var checkmark = $(this).find('span');
+    checkbox.prop('checked', true);
+    checkmark.css("visibility", "visible");
+    $(this).addClass("character-active");
+  });
+
+});
+$("#uncheckall").click(function() {
+
+  $(".character").each(function() {
+    var checkbox = $(this).find('input');
+    var checkmark = $(this).find('span');
+    checkbox.prop('checked', false);
+    checkmark.css("visibility", "hidden");
+    $(this).removeClass("character-active");
+  });
+
+});
 
 
-		var totalCharacters = 39;
-		var characters = [
-			{ name: "Baba Yaga", value: 80000, img: "Baba_Yaga.png", color: "#F8BC61" },
-			{ name: "Charlotte", value: 80000, img: "Charlotte.png", color: "#45ECE3" },
-			{ name: "Dark Jonesy", value: 80000, img: "Dark_Jonesy.png", color: "#9397C3" },
-			{ name: "Dusk", value: 80000, img: "Dusk.png", color: "#FC2765" },
-			{ name: "Fabio Sparklemane", value: 80000, img: "Fabio_Sparklemane.png", color: "#ED6EB4" },
-			{ name: "J.B. Chimpanski", value: 80000, img: "J.B._Chimpanski.png", color: "#F15953" },
-			{ name: "Kitbash", value: 80000, img: "Kitbash.png", color: "#AE7A33" },
-			{ name: "Kor", value: 80000, img: "Kor.png", color: "#F13653" },
-			{ name: "Madcap", value: 80000, img: "Madcap.png", color: "#31DAE7" },
-			{ name: "Pitstop", value: 80000, img: "Pitstop.png", color: "#B82785" },
-			{ name: "Penny", value: 80000, img: "Penny.png", color: "#F3B063" },
-			{ name: "Scuba Jonesy", value: 80000, img: "Scuba_Jonesy.png", color: "#7A7DB5" },
-			{ name: "The Brat", value: 80000, img: "The_Brat.png", color: "#DDB873" },
-			{ name: "Toona Fish", value: 80000, img: "Toona_Fish.png", color: "#88888A" },
-			{ name: "Torin", value: 80000, img: "Torin.png", color: "#F165DB" },
-			{ name: "Wrath", value: 80000, img: "Wrath.png", color: "#0096DE" },
-			{ name: "Big Mouth", value: 150000, img: "Big_Mouth.png", color: "#576CBB" },
-			{ name: "Grim Fable", value: 150000, img: "Grim_Fable.png", color: "#DCAF6A" },
-			{ isNew: true, name: "Nitehare", value: 150000, img: "Nitehare.png", color: "#9A7B73" },
-			{ isNew: true, name: "Raven", value: 150000, img: "Raven.png", color: "#8B358B" }
-		];
+//Punchcard Scroll
+$(".character-title label").each(function() {
+	var w = $(this).width();
+	var p = w - 95;
+	var s;
+	if(w < 120){
+		s = 1;
+	} else if(w < 140){
+		s = 2;
+	} else if(w < 260){
+		s = 3;
+	} else if(w < 200){
+		s = 4;
+	} else if(w < 220){
+		s = 5;
+	} else {
+		s = 6;
+	}
+	if(w > 90){
+		$(this).css("animation", "scroll-left " + s + "s linear infinite alternate");
+		$(this).css("left", "-"+p+"px");
+	}
+});
+	
+//Calculate
+$("#calculate").click(function() {
 
-		var levels = [0, 40000, 90000, 140000, 200000, 260000, 340000, 420000, 500000, 580000, 660000, 740000, 820000, 900000, 980000, 1060000, 1140000, 1220000, 1300000, 1380000, 1460000, 1540000, 1620000, 1700000, 1780000, 1860000, 1940000, 2020000, 2100000, 2180000, 2260000, 2340000, 2420000, 2500000, 2580000, 2660000, 2740000, 2820000, 2900000, 2980000, 3060000, 3140000, 3220000, 3300000, 3380000, 3460000, 3540000, 3620000, 3700000, 3780000, 3860000, 3940000, 4020000, 4100000, 4180000, 4260000, 4340000, 4420000, 4500000, 4580000, 4660000, 4740000, 4820000, 4900000, 4980000, 5060000, 5140000, 5220000, 5300000, 5380000, 5460000, 5540000, 5620000, 5700000, 5780000, 5860000, 5940000, 6020000, 6100000, 6180000, 6260000, 6340000, 6420000, 6500000, 6580000, 6660000, 6740000, 6820000, 6900000, 6980000, 7060000, 7140000, 7220000, 7300000, 7380000, 7460000, 7540000, 7620000, 7700000, 7780000, 7830000, 7880250, 7930750, 7981250, 8032000, 8083000, 8134250, 8185750, 8237500, 8289500, 8341500, 8393750, 8446250, 8499000, 8552000, 8605250, 8658750, 8712250, 8766000, 8820000, 8874250, 8928750, 8983500, 9038500, 9093750, 9149250, 9205000, 9260750, 9316750, 9373000, 9429500, 9486250, 9543250, 9600500, 9658000, 9715750, 9773750, 9832000, 9890500, 9949250, 10008250, 10067500, 10127000, 10186750, 10246750, 10307000, 10367500, 10428250, 10489250, 10550500, 10612000, 10673750, 10735750, 10798000, 10860500, 10923250, 10986250, 11049500, 11113000, 11176750, 11240750, 11305000, 11369500, 11434250, 11499250, 11564500, 11630000, 11695750, 11761750, 11828000, 11894750, 11961750, 12029000, 12096500, 12164250, 12232250, 12300500, 12369000, 12437750, 12507000, 12576500, 12646250, 12716250, 12786500, 12857000, 12927750, 12999000, 13070500, 13142250, 13214250, 13286500, 13359250, 13432250, 13505500, 13579000, 13652750, 13727000, 13801500, 13876250, 13951250];
-
-		//CREATE CHARS
-		var count = 0;
-		characters.forEach(function (item) {
-			$("#punchcards").append(
-				"<li>" +
-				"<input type='checkbox' id='" + item.name + "' name='" + item.name + "' />" +
-				"<label id='box_" + item.name + "' for='" + item.name + "'>" +
-				"<span>" + item.name + "</span><br/>" +
-				"<img style='background:radial-gradient(ellipse at center bottom, " + item.color + " 0%, #000 100%);' src='Characters/" + item.img + "'/>" +
-				"</label>" +
-				"</li>"
-			);
-			if (item.isNew === true) {
-				$("#box_" + item.name).append("<span class='badge'>NEW</span>")
-			}
-			count++;
-		});
-
-		$("#checkall").click(function () {
-			$("#punchcards input").prop("checked", true);
-		});
-
-		$("#uncheckall").click(function () {
-			$("#punchcards input").prop("checked", false);
-		});
-
-		$("#newChars").append("<span>(There are " + (39 - characters.length) + " more Character Punchcards to be released later this season)</span>")
-
-		//CALC CODE
-		$("#calc").click(function () {
-			var cur = $("input[name='current']").val();
-			var targ = $("input[name='target']").val();
-			var newChar = $("input[name='newchars']").is(':checked');
-			var finalXP = levels[cur - 1];
-			var levelAfter;
-
-			//COUNT WEEKS
-			var endofseason = moment("2021-12-05", "YYYY-MM-DD");
-			var today = moment().startOf('day');
-			var weeksLeft = Math.floor(moment.duration(endofseason.diff(today)).asWeeks());
-			var daysLeft = Math.floor(moment.duration(endofseason.diff(today)).asDays());
-			var weekly = $("input[name='weekly']:checked").val();
-
-			//COUNT OLD PUNCHCARDS
-			var oldPunchTotal = 0;
-			characters.forEach(function (item) {
-				var test = $("#punchcards input[name='" + item.name + "']").is(':checked');
-				if (!test) {
-					oldPunchTotal += item.value;
-				}
-			});
-			//Final XP Calculation
-			finalXP += newChar ? (39 - characters.length) * 150000 : 0;
-			finalXP += weeksLeft * weekly * 50000;
-			finalXP += oldPunchTotal;
-
-
-			for (var i = 0; i < levels.length; i++) {
-				if (finalXP < levels[i] || i == 199) {
-					levelAfter = (i + 1);
-					break;
-				}
-			}
-
-			var expNeededToTarget = levels[targ - 1] - finalXP;
-			var expPerDay = Math.ceil(expNeededToTarget / daysLeft);
-			var daysAFK = Math.ceil(expNeededToTarget / 216000);
-			var daysnoAFK = Math.ceil(expNeededToTarget / 90000);
-			var daysonlyAFK = Math.ceil(expNeededToTarget / 126000);
-			var effectiveAFK = daysAFK / weeksLeft;
-			var effectiveonlyAFK = daysonlyAFK / weeksLeft;
-			var effective = daysnoAFK / weeksLeft;
-			$("#results").empty();
-			$("#results").append("<div><span>Days left to season: " + daysLeft + "</span></div>");
-			$("#results").append("<div style='clear: both;' class='goal'><span>Current<br/>lvl " + cur + "</span> <span style='font-size:50px'>⇒</span> <span>Expected<br/>lvl " + levelAfter + "</span></div>");
-			if (expNeededToTarget > 0) {
-				$("#results").append("<div><span>XP left to lvl "+targ+"<br/>" + expNeededToTarget + "</span></div>");
-				$("#results").append("<div><span>XP needed per day <br/>" + expPerDay + "</span></div>");
-				$("#results").append("<div style='clear: both; width:400px'><span><label style='color:red;'>WARNING!</label> Below calculations do not consider additional XP you recieve from regular play nor does it account for SUPERCHARGED XP.</span></div>");
-				$("#results").append("<div style='clear: both;'><span>" + daysAFK + " days of creative AFK + daily punchcards<br/>(Most effective to play " + effectiveAFK + " days a week).</span></div>");
-				$("#results").append("<div><span><label style='color:#501fe4;'>OR</label> " + daysnoAFK + " days of only daily punchcards <br/>(Most effective to play " + effective + " days a week).</span></div>");
-				$("#results").append("<div><span><label style='color:#501fe4;'>OR</label> " + daysonlyAFK + " days of only creative AFK <br/>(Most effective to play " + effectiveonlyAFK + " days a week).</span></div>");
-			} else {
-				$("#results").append("<div style='clear: both;'><span>Congrats! You should reach your goal by the end of the season.</span></div>");
-			}
-
-
-		});
+});
 	</script>
 </body>
 
