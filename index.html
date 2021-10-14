@@ -533,7 +533,7 @@
 			
 			var neededXP = goalXP - finalXP;
 			if(neededXP > 0){
-				calcResults.append( "<div style='color:yellow'>XP still needed to level "+targ+":<br/><span>"+neededXP+" XP</span></div>");
+				calcResults.append( "<div style='color:yellow'>XP still needed to level "+targ+" from "+lvlAfterWeekly+":<br/><span>"+neededXP+" XP</span></div>");
 				$("#xp").text(neededXP + " XP");
 			} else {
 				calcResults.append( "<div>You will reach your goal of level "+targ+"</div>");	
@@ -562,18 +562,18 @@
 			//Days to AFK
 			var numAFKNeeded = Math.ceil(neededXP / (15000*5));
 			if(numAFKNeeded > daysLeft){
-				howTo.append( "<div>Number of days AFK'ing in creative:<br/><span><label style='color:red;'>"+numAFKNeeded+"</label> (15000 every 15 min 5 times per day max)</span></div><hr>");
+				howTo.append( "<div>Days AFK'ing in creative:<br/><span><label style='color:red;'>"+numAFKNeeded+"</label> (15000 every 15 min 5 times per day max)</span></div><hr>");
 			} else {
-				howTo.append( "<div>Number of days AFK'ing in creative:<br/><span>"+numAFKNeeded+" (15000 every 15 min 5 times per day max)</span></div><hr>");
+				howTo.append( "<div>Days AFK'ing in creative:<br/><span>"+numAFKNeeded+" (15000 every 15 min 5 times per day max)</span></div><hr>");
 			}
 			
 
 			//AFK and Daily
 			var numBothNeeded = Math.ceil(neededXP / ((15000*5)+(45000*3)));
 			if(numBothNeeded > daysLeft){
-				howTo.append( "<div>Number of days both AFK'ing in creative and completing Daily Punchcard:<br/><span><label style='color:red;'>"+numBothNeeded+"</label></span></div>");
+				howTo.append( "<div>Days both AFK'ing in creative and completing Daily Punchcard:<br/><span><label style='color:red;'>"+numBothNeeded+"</label></span></div>");
 			} else {
-				howTo.append( "<div>Number of days both AFK'ing in creative and completing Daily Punchcard:<br/><span>"+numBothNeeded+"</span></div>");
+				howTo.append( "<div>Days both AFK'ing in creative and completing Daily Punchcard:<br/><span>"+numBothNeeded+"</span></div>");
 			}
 			
 			
