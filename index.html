@@ -344,8 +344,17 @@
 	</div>
 
 	<script>
+		
+		var numWeeklyQuests = 3;
+		var weeklyQuestValue = 75000;
+		var numDailyQuests = 5;
+		var dailyQuestValue = 45000;
+		var numDailyAFK = 5;
+		var AFKValue = 15000;
 
 		var characters = [
+			{ name: "Ariana Grande", value: 150000, img: "Ariana.png", color: "#f7409a" },
+			{ name: "Containment Specialist", value: 150000, img: "Specialist.png", color: "#21ae83" },
 			{ name: "Dire", value: 150000, img: "Dire.png", color: "#c8aa7e" },
 			{ name: "Ragsy", value: 150000, img: "Ragsy.png", color: "#ff6997" },
 			{ name: "Nitehare", value: 150000, img: "Nitehare.png", color: "#9A7B73" },
@@ -525,7 +534,7 @@
 			if(futureChars)
 			calcResults.append( "<div>Complete Future Character Punchcards:<br/><span>"+futurePunchTotal+" XP (Level "+lvlAfterPunch+"->"+lvlAfterFuturePunch+")</span></div><hr>");
 			
-			var weeklyXP = weeksLeft * weekly * 75000;
+			var weeklyXP = weeksLeft * weekly * weeklyQuestValue;
 			finalXP += weeklyXP;
 			var lvlAfterWeekly = getLvl(finalXP);
 			if(weekly != 0)
@@ -552,24 +561,23 @@
 			howTo.append( "<div>Days left to season<br/><span>"+daysLeft+" (At least "+Math.ceil(neededXP/daysLeft)+" XP per day)</span></div><hr>");
 			
 			//Daily's
-			var numDailyNeeded = Math.ceil(neededXP / (45000*3));
+			var numDailyNeeded = Math.ceil(neededXP / (dailyQuestValue*numDailyQuests));
 			if(numDailyNeeded > daysLeft){
-				howTo.append( "<div>Number of Complete Daily Punchcards Required:<br/><span><label style='color:red;'>"+numDailyNeeded+"</label> (45000 * 3 for each Daily Punchcard)</span></div><hr>");
+				howTo.append( "<div>Number of Complete Daily Punchcards Required:<br/><span><label style='color:red;'>"+numDailyNeeded+"</label> ("+dailyQuestValue+" * "+numDailyQuests+" for each Daily Punchcard)</span></div><hr>");
 			} else {
-				howTo.append( "<div>Number of Complete Daily Punchcards Required:<br/><span>"+numDailyNeeded+" (45000 * 3 for each Daily Punchcard)</span></div><hr>");
+				howTo.append( "<div>Number of Complete Daily Punchcards Required:<br/><span>"+numDailyNeeded+" ("+dailyQuestValue+" * "+numDailyQuests+" for each Daily Punchcard)</span></div><hr>");
 			}
 
 			//Days to AFK
-			var numAFKNeeded = Math.ceil(neededXP / (15000*5));
+			var numAFKNeeded = Math.ceil(neededXP / (AFKValue*numDailyAFK));
 			if(numAFKNeeded > daysLeft){
-				howTo.append( "<div>Days AFK'ing in creative:<br/><span><label style='color:red;'>"+numAFKNeeded+"</label> (15000 every 15 min 5 times per day max)</span></div><hr>");
+				howTo.append( "<div>Days AFK'ing in creative:<br/><span><label style='color:red;'>"+numAFKNeeded+"</label> ("+AFKValue+" every 15 min "+numDailyAFK+" times per day max)</span></div><hr>");
 			} else {
-				howTo.append( "<div>Days AFK'ing in creative:<br/><span>"+numAFKNeeded+" (15000 every 15 min 5 times per day max)</span></div><hr>");
+				howTo.append( "<div>Days AFK'ing in creative:<br/><span>"+numAFKNeeded+" ("+AFKValue+" every 15 min "+numDailyAFK+" times per day max)</span></div><hr>");
 			}
 			
-
 			//AFK and Daily
-			var numBothNeeded = Math.ceil(neededXP / ((15000*5)+(45000*3)));
+			var numBothNeeded = Math.ceil(neededXP / ((AFKValue*numDailyAFK)+(dailyQuestValue*numDailyQuests)));
 			if(numBothNeeded > daysLeft){
 				howTo.append( "<div>Days both AFK'ing in creative and completing Daily Punchcard:<br/><span><label style='color:red;'>"+numBothNeeded+"</label></span></div>");
 			} else {
